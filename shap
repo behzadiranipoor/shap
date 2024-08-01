@@ -1,0 +1,73 @@
+import tensorflow as tf
+import numpy as np
+import pandas as pd
+import sklearn
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+data=pd.read_excel('your data')
+df=pd.DataFrame(data)
+data.head()
+
+data=pd.read_csv('/content/fake data.csv')
+df=pd.DataFrame(data)
+data.head()
+x=pd.DataFrame(data,columns=['your features'])
+y=pd.DataFrame(data,columns=['target'])
+
+np.random.seed(42)
+
+x_train, x_test, y_train, y_test = train_test_split(x, y,
+test_size=0.20, random_state=42)
+print(x_train.shape)
+print(x_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+
+
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Dense(20,name='dense1',input_dim=20, activation='relu'))
+model.add(tf.keras.layers.Dense(32,name='dense2' , activation='relu'))
+
+model.add(tf.keras.layers.Dense(16,name='dense3' , activation='relu'))
+model.add(tf.keras.layers.Dense(32,name='dense4' , activation='relu'))
+
+model.add(tf.keras.layers.Dense(1,name='dense5',activation='relu'))
+
+
+
+model.compile(loss='mse', optimizer='adam')
+model.summary()  #Definition of cost function and optimizer
+
+history=model.fit(x_train, y_train, epochs=100,batch_size=20, verbose=1)  #traning the model
+
+y_pred=model.predict(x_test)
+y_pred2=model.predict(x_train)
+
+!pip install shap
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn import metrics
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
+import xgboost as xgb
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+import shap
+from scipy import stats
+from sklearn.decomposition import PCA
+
+X100 = shap.utils.sample(x, 100)  # 100 instances for use as the background distribution
+
+model.fit(x, y)
+
+      
